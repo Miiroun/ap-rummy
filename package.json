@@ -1,0 +1,23 @@
+{
+  "name": "ap-rummy",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://miiroun.github.io/ap-rummy/",
+  "bugs": {
+    "url": "https://github.com/Miiroun/ap-rummy/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Miiroun/ap-rummy.git"
+  },
+  "license": "MIT",
+  "author": "miiroun",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "archipelago.js": "^2.1.0"
+  }
+}
