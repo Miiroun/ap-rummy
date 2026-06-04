@@ -1,5 +1,90 @@
 <!DOCTYPE html>
-<html lang="en" >
-    this is a test
-     <script src="client.js"></script> 
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AP-rummy</title>
+    <link rel="stylesheet" href="./style.css">
+    <meta name="theme-color" content="#4dabf7">
+    <meta name="mobile-web-app-capable" content="yes">
+</head>
+
+<body bgcolor=#56ea8a>
+
+    <script>
+        // set background image to https://i.postimg.cc/67rsfPzk/image-min.png
+        document.body.style.backgroundImage = "url('https://i.postimg.cc/ZqgT4tNh/image2-min.png')";
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundPosition = 'center center';
+        document.body.style.backgroundSize = 'auto 100%';
+        // keep normal cursor (no pointer on hover)
+        document.body.style.cursor = 'default';
+    </script>
+
+
+
+    <script type="module" src="./src/client.js"></script>
+    <script type="module" src="./src/game.js"></script>
+    <script type="module" src="./src/blocks.js"></script>
+
+
+
+
+    <div id="connectionDiv">
+        <form id="connection_details">
+            <table>
+                <tr style="vertical-align: top;">
+                    <td align="right">
+                        <label for="fname">Hostname:</label>
+                        <input type="text" id="Hostname" name="Hostname"><br>
+
+                        <label for="fname">Port:</label>
+                        <input type="text" id="Port" name="Port"><br>
+
+                        <label for="fname">Name:</label>
+                        <input type="text" id="Name" name="Name"><br>
+
+                        <label for="fname">Password:</label>
+                        <input type="password" id="Password" name="Password">
+                    </td>
+
+                    <td>
+                        <a style="color: #FF6E59;" href="https://github.com/Miiroun/ap-rummy">Source</a>
+                        <div class="submit-wrapper">
+                            <input type="submit" value="Submit"><br>
+                            <div class="status-wrapper">
+                                <div id="status-connected" class="default-hidden">Connected</div>
+                                <div id="status-failed" class="default-hidden">Connection Failed</div>
+                                <div id="status-connecting" class="default-hidden">Connecting...</div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    </center>
+    </div>
+
+    <div id="chat"></div>
+
+    
+
+    <div id="game" hidden>
+        <b>THIS IS A GAME</b>
+
+        <div id="board">
+            <div id="brick">
+            <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+            <div id="boardheader">Click here to move</div>
+             <img src="img/black_blue.png" alt="CARD:B-2" style="width:128px;height:128px;">
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
 </html>
