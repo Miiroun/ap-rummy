@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>AP-rummy</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
     <link rel="stylesheet" href="./style.css">
     <meta name="theme-color" content="#4dabf7">
-    <meta name="mobile-web-app-capable" content="yes">
 </head>
 
 <body bgcolor=#56ea8a>
 
     <script>
         // set background image to https://i.postimg.cc/67rsfPzk/image-min.png
-        document.body.style.backgroundImage = "url('https://i.postimg.cc/ZqgT4tNh/image2-min.png')";
+        document.body.style.backgroundImage = "img/spr_Beach.png";
         document.body.style.backgroundRepeat = 'no-repeat';
         document.body.style.backgroundPosition = 'center center';
         document.body.style.backgroundSize = 'auto 100%';
@@ -24,65 +24,110 @@
 
 
     <script type="module" src="./src/client.js"></script>
-    <script type="module" src="./src/game.js"></script>
     <script type="module" src="./src/blocks.js"></script>
+    <script type="module" src="./src/game.js"></script>
 
 
+    <div id="Intro">
+        <b>AP-Rummy</b>
+    </div>
 
+    <div id="startPage">
 
-    <div id="connectionDiv">
-        <form id="connection_details">
-            <table>
-                <tr style="vertical-align: top;">
-                    <td align="right">
-                        <label for="fname">Hostname:</label>
-                        <input type="text" id="Hostname" name="Hostname"><br>
+        <div id="connectionDiv">
+            <b> Enter your archipelago connection details</b>
 
-                        <label for="fname">Port:</label>
-                        <input type="text" id="Port" name="Port"><br>
+            <form id="connection_details">
+                <table>
+                    <tr style="vertical-align: top;">
+                        <td align="right">
+                            <label for="fname">Hostname:</label>
+                            <input type="text" id="Hostname" name="Hostname" value="archipelago.gg"><br>
 
-                        <label for="fname">Name:</label>
-                        <input type="text" id="Name" name="Name"><br>
+                            <label for="fname">Port:</label>
+                            <input type="text" id="Port" name="Port" value="12345"><br>
 
-                        <label for="fname">Password:</label>
-                        <input type="password" id="Password" name="Password">
-                    </td>
+                            <label for="fname">Name:</label>
+                            <input type="text" id="Name" name="Name" value="Player1"><br>
 
-                    <td>
-                        <a style="color: #FF6E59;" href="https://github.com/Miiroun/ap-rummy">Source</a>
-                        <div class="submit-wrapper">
-                            <input type="submit" value="Submit"><br>
-                            <div class="status-wrapper">
-                                <div id="status-connected" class="default-hidden">Connected</div>
-                                <div id="status-failed" class="default-hidden">Connection Failed</div>
-                                <div id="status-connecting" class="default-hidden">Connecting...</div>
+                            <label for="fname">Password:</label>
+                            <input type="password" id="Password" name="Password">
+                        </td>
+
+                        <td>
+                            <div class="submit-wrapper">
+                                <input type="submit" value="Submit"><br>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </form>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="about">
+            <b>About</b>
+            This is an implementaion of rummy made for <a href="https://archipelago.gg/">archipelago</a> as a project
+            for its game yam 2026.
+            The ap-world code can be found <a
+                href="https://github.com/Miiroun/Archipelago-NewSuperMarioBrosWii/tree/RUMMY">here</a>.
+
+            You can find the game <a href="https://miiroun.github.io/ap-rummy/">here</a>.
+
+            Made by Miiroun
+
+            Credit:
+            - Archipelago.js client lib
+            - qwint's ap-air delivery which was partially used as a base for the archipelago implementation
+            - XXX for cards imagess
+        </div>
     </div>
     </center>
     </div>
 
-    <div id="chat"></div>
+
 
     
-
     <div id="game" hidden>
-        <b>THIS IS A GAME</b>
+        <b>The game board</b>
 
         <div id="board">
-            <div id="brick">
-            <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-            <div id="boardheader">Click here to move</div>
-             <img src="img/black_blue.png" alt="CARD:B-2" style="width:128px;height:128px;">
+
+
+
+        </div>
+
+        <div id="preset" hidden>
+            <div id="preset_brick">
+                <div id="brick" >
+                    <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+                    <!--img src="img/black_blue.png" alt="CARD:B-2" style="width:64px;height:96px;"-->
+                    <canvas width="64px" height="96px"></canvas>
+                </div>
             </div>
+
         </div>
 
     </div>
 
+    <div id="support">
+        Need help? read the <a
+            href="https://github.com/Miiroun/Archipelago-NewSuperMarioBrosWii/blob/RUMMY/worlds/rummy/docs/setup_en.md">setup
+            docs</a>.
+    </div>
+
+    <div id="chatbox" hidden>
+        <b>Chat</b>
+        <div id="chat"></div>
+
+        <div id="send_chat">
+            <form id="send_chat_forum" onsubmit="return false">
+                <label for="fname">Message </label>
+                <input type="text" id="Message" name="Message" value=""><br>
+
+                <input type="submit" value="Send"><br>
+
+        </div>
+    </div>
 
 
 </body>

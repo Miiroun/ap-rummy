@@ -1,7 +1,7 @@
 //import readline from "node:readline";
 
 import { Client } from "https://unpkg.com/archipelago.js/dist/archipelago.min.js";
-import {InitGame} from "./game.js"
+import {InitGame, OnitemsReceived} from "./game.js"
 //import { Client } from "archipelago.js";
 
 // https://stackoverflow.com/a/71574505
@@ -99,19 +99,11 @@ function onMessage(text, nodes) {
 
 const form = document.getElementById("connection_details")
 
-client.items.on("itemsReceived", (items, index) => {
-    //if this is a sync packet reset all our item addresses without changing anything else
-    if (index == 0) {
 
-    }
-    //go through all our item addresses and if they are not set, check the recieved items for their ap id, and set the gpio flag if we recieved it
-    //on the scale i expect pico-8 games to be, this will be good enough
-
-});
 
 
 // Connect to the Archipelago server
-function connect_to_server(event) {
+async function connect_to_server(event) {
     if (event !== null) {
         event.preventDefault()
     }
@@ -119,7 +111,8 @@ function connect_to_server(event) {
     var slot = document.getElementById("Name").value
     var password = document.getElementById("Password").value ? document.getElementById("Password").value : null
     var conn_options = {
-        password: password
+        password: password,
+        "slot_data" : true
     }
     if ("Protocol" in data) {
         var pro = data["Protocol"].split("://").pop().split("@")
@@ -131,35 +124,29 @@ function connect_to_server(event) {
     console.log(slot)
 
 
-    document.getElementById("status-connected").classList.add("default-hidden")
-    document.getElementById("status-failed").classList.add("default-hidden")
-
-    document.getElementById("status-connecting").classList.remove("default-hidden")
-    client
-        .login(url, slot, "AP-Rummy", conn_options)
-        .then(() => {
-            console.log("Connected to the server");
-            document.getElementById("status-connecting").classList.add("default-hidden")
-            document.getElementById("status-connected").classList.remove("default-hidden")
-            // You are now connected and authenticated to the server. You can add more code here if need be.
-            var connectDIV = document.getElementById("connectionDiv");
-            connectDIV.style.display = "none";
-            InitGame()
-
-        })
-        .catch((error) => {
+    try{
+        var slot_data = await client.login(url, slot, "AP-Rummy", conn_options)
+        console.log("connected")
+        InitGame(slot_data)
+    }
+    catch(error){
             console.error("Failed to connect:", error);
-            document.getElementById("status-connecting").classList.add("default-hidden")
-            document.getElementById("status-failed").classList.remove("default-hidden")
-            // Handle the connection error.
-        });
+    }
+
 }
 form.addEventListener("submit", connect_to_server);
 
+
+client.items.on("itemsReceived", async (items, index) => {
+    await OnitemsReceived(items, index)
+
+});
+
+
 // Disconnect from the server when unloading window.
-// window.addEventListener("beforeunload", () => {
-//     client.disconnect();
-// })
+window.addEventListener("beforeunload", () => {
+     client.disconnect();
+})
 
 if (false) {
     client.goal();
@@ -170,6 +157,22 @@ if (data["auto"] === "True") {
     console.log("autoconnecting")
     connect_to_server(null)
 }
+
+
+function send_message(e){
+    var messageDIV = document.getElementById("Message")
+    if (client.ClientStatus != 0){
+    client.messages.say(messageDIV.value);
+    messageDIV.value = ""
+    } else {
+        messageDIV.value = "faild to send, not connected"
+
+    }
+
+  e.preventDefault();
+}
+var message_forum = document.getElementById("send_chat_forum");
+message_forum.addEventListener("submit", send_message);
 
 
 
