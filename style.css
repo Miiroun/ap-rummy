@@ -8,6 +8,14 @@
   text-align: center;
 }
 
+#brick_frame {
+  width : 64px;
+  height : 96px;
+  border : 1px solid #055292;
+  color : rgba(0, 0, 0, 0);
+  offset-position: top 69px right 0;
+
+}
 
 
 #chat {

@@ -1,12 +1,33 @@
+import { board } from "./game.js"
+
+
 // Make the DIV element draggable:
 dragElement(document.getElementById("brick"));
 
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   elmnt.onmousedown = dragMouseDown;
-  
+
 
   function dragMouseDown(e) {
+    if (e.ctrlKey) {
+      //make this object selected
+      board.forEach(element => {
+        if (element.brick_copy.childNodes[1] == elmnt) {
+          if (!element.selected) {
+            element.selected = true
+            element.brick_copy.childNodes[1].childNodes[7].style.display = "block";
+          } else {
+            element.selected = false
+            element.brick_copy.childNodes[1].childNodes[7].style.display = "none";
+          }
+        }
+      });
+    }
+    if (e.shiftKey) {
+
+    }
+
     e = e || window.event;
     e.preventDefault();
     // get the mouse cursor position at startup:
@@ -16,6 +37,7 @@ function dragElement(elmnt) {
     // call a function whenever the cursor moves:
     document.onmousemove = elementDrag;
     elmnt.style.zIndex = 11;
+
   }
 
   function elementDrag(e) {
@@ -36,8 +58,9 @@ function dragElement(elmnt) {
     document.onmouseup = null;
     document.onmousemove = null;
     elmnt.style.zIndex = 10;
+    //try_merge(elmnt)
 
   }
 }
 
-export {dragElement}
+export { dragElement }

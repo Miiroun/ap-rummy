@@ -1,7 +1,7 @@
 //import readline from "node:readline";
 
 import { Client } from "https://unpkg.com/archipelago.js/dist/archipelago.min.js";
-import {InitGame, OnitemsReceived} from "./game.js"
+import {InitGame, OnitemsReceived, merges} from "./game.js"
 //import { Client } from "archipelago.js";
 
 // https://stackoverflow.com/a/71574505
@@ -148,10 +148,6 @@ window.addEventListener("beforeunload", () => {
      client.disconnect();
 })
 
-if (false) {
-    client.goal();
-    client.check(id);
-}
 
 if (data["auto"] === "True") {
     console.log("autoconnecting")
@@ -175,4 +171,4 @@ var message_forum = document.getElementById("send_chat_forum");
 message_forum.addEventListener("submit", send_message);
 
 
-
+export {client}
