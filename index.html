@@ -13,12 +13,13 @@
 
     <script>
         // set background image to https://i.postimg.cc/67rsfPzk/image-min.png
-        document.body.style.backgroundImage = "img/spr_Beach.png";
+        //document.body.style.backgroundImage = "img/spr_Beach.png";
         document.body.style.backgroundRepeat = 'no-repeat';
         document.body.style.backgroundPosition = 'center center';
         document.body.style.backgroundSize = 'auto 100%';
         // keep normal cursor (no pointer on hover)
         document.body.style.cursor = 'default';
+
     </script>
 
 
@@ -35,7 +36,7 @@
     <div id="startPage">
 
         <div id="connectionDiv">
-            <b> Enter your archipelago connection details</b>
+            <b> Enter your archipelago connection details</b> <br>
 
             <form id="connection_details">
                 <table>
@@ -45,7 +46,7 @@
                             <input type="text" id="Hostname" name="Hostname" value="archipelago.gg"><br>
 
                             <label for="fname">Port:</label>
-                            <input type="text" id="Port" name="Port" value="12345"><br>
+                            <input type="text" id="Port" name="Port" value="38281"><br>
 
                             <label for="fname">Name:</label>
                             <input type="text" id="Name" name="Name" value="Player1"><br>
@@ -65,20 +66,29 @@
         </div>
 
         <div id="about">
-            <b>About</b>
+            <b>About</b> <br>
             This is an implementaion of rummy made for <a href="https://archipelago.gg/">archipelago</a> as a project
-            for its game yam 2026.
+            for its game yam 2026.<br>
             The ap-world code can be found <a
-                href="https://github.com/Miiroun/Archipelago-NewSuperMarioBrosWii/tree/RUMMY">here</a>.
+                href="https://github.com/Miiroun/Archipelago-NewSuperMarioBrosWii/tree/RUMMY">here</a> and the client
+            code can be found <a href="https://github.com/Miiroun/ap-rummy">here</a>. <br>
 
-            You can find the game <a href="https://miiroun.github.io/ap-rummy/">here</a>.
+            You can find the game <a href="https://miiroun.github.io/ap-rummy/">here</a> with the ap-world and yaml <a
+                href="https://github.com/Miiroun/ap-rummy/releases">here</a>. <br> <br>
 
-            Made by Miiroun
 
-            Credit:
-            - Archipelago.js client lib
-            - qwint's ap-air delivery which was partially used as a base for the archipelago implementation
-            - XXX for cards imagess
+            <b>Credit:</b>
+            <dl>
+                <li>Miiroun : Developer</li>
+                <li>Archipelago.js : client lib used</li>
+                <li>Ap-air-delivery : inspiration on how to use the client lib</li>
+                <li>Yacht-dice-ap : gameplay inspiration</li>
+                <li>AP-Quest : ap-world inspiration</li>
+                <li> Pixbay :
+                    Card sound:  <a href="https://pixabay.com/sound-effects/film-special-effects-card-sounds-35956/">card</a>, <a href="https://pixabay.com/sound-effects/film-special-effects-negative-beeps-6008/">bad merge</a>,<a href="https://pixabay.com/sound-effects/musical-049269-funny-fanfare-2wav-65260/">win</a>, <a href="https://pixabay.com/sound-effects/film-special-effects-086028-39win39-video-game-sound-effect-38176/">unconect</a> </li>
+                <li> <a href="https://kaboff.itch.io/cards-pixel-art-pack-64x96">kaboff's Cards Pixel Art - Pack
+                        (64x96)</a>: Card images</li>
+            </dl>
         </div>
     </div>
     </center>
@@ -86,7 +96,7 @@
 
 
 
-    
+
     <div id="game" hidden>
         <b>The game board</b>
 
@@ -98,12 +108,15 @@
 
         <div id="preset" hidden>
             <div id="preset_brick">
-                <div id="brick" >
+                <div id="brick">
                     <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
                     <!--img src="img/black_blue.png" alt="CARD:B-2" style="width:64px;height:96px;"-->
                     <canvas width="64px" height="96px"></canvas>
                     <div id="brick_frame" hidden></div>
                 </div>
+            </div>
+            <div id="preset_merge">
+
             </div>
 
         </div>
@@ -111,12 +124,13 @@
     </div>
 
     <div id="support">
+        <b>Support</b> <br>
         Need help? read the <a
             href="https://github.com/Miiroun/Archipelago-NewSuperMarioBrosWii/blob/RUMMY/worlds/rummy/docs/setup_en.md">setup
             docs</a>.
     </div>
 
-    <div id="chatbox" hidden>
+    <div id="chatbox">
         <b>Chat</b>
         <div id="chat"></div>
 

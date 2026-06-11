@@ -1,39 +1,33 @@
 //import readline from "node:readline";
 
-import { Client } from "https://unpkg.com/archipelago.js/dist/archipelago.min.js";
-import {InitGame, OnitemsReceived, merges} from "./game.js"
+import { Client, clientStatuses} from "https://unpkg.com/archipelago.js/dist/archipelago.min.js";
+import { InitGame, OnitemsReceived, merges } from "./game.js"
 //import { Client } from "archipelago.js";
 
-// https://stackoverflow.com/a/71574505
-var params = window.location.search.slice(1).split("&");
-//convert the params to an object
-var data = params.reduce((obj, param) => {
-    var pair = param.split("=");
-    return {
-        ...obj,
-        [pair[0]]: decodeURIComponent(pair[1])
-    }
-}, {});
-//console.log({data});
-//insert values by matching input name to data object key
-const fillable_forms = ["Hostname", "Port", "Name", "Password"]
-for (var index in fillable_forms) {
-    const key = fillable_forms[index]
-    if (key in data) {
-        document.getElementById(key).value = data[key]
-    }
-}
-// document.querySelectorAll("input").forEach(input => input.value = data[input.name]);
-
-
+(new URL(window.location.href)).searchParams.forEach((x, y) =>
+    document.getElementById(y).value = x)
 
 // Create a new Archipelago client
 const client = new Client();
 
-// start chat from phar
+function showText(text, color = "#000000") {
+    const chat = document.getElementById("chat");
+    const messageElement = document.createElement("div");
+
+    const nodeElement = document.createElement("span");
+    nodeElement.innerText = text;
+    nodeElement.style.color = color;
+
+
+    messageElement.appendChild(nodeElement);
+    chat.appendChild(messageElement);
+
+    console.log(text)
+
+}
+
+//display chat
 client.messages.on("message", onMessage);
-
-
 function onMessage(text, nodes) {
     // Plaintext to console, because why not?
     console.log(text);
@@ -45,64 +39,20 @@ function onMessage(text, nodes) {
         const nodeElement = document.createElement("span");
         nodeElement.innerText = node.text;
 
-        switch (node.type) {
-            case "entrance":
-                nodeElement.style.color = "#6495ED";
-                break;
-
-            case "location":
-                nodeElement.style.color = "#00FF7F";
-                break;
-
-            case "color":
-                // not really correct, but technically the only color nodes the server returns is "green" or "red"
-                // so it's fine enough for an example.
-                nodeElement.style.color = node.color;
-                break;
-
-            case "player":
-                if (node.player.slot === client.players.self.slot) {
-                    // It's us!
-                    nodeElement.style.color = "#EE00EE";
-                } else {
-                    // It's them!
-                    nodeElement.style.color = "#FAFAD2";
-                }
-                break;
-
-            case "item": {
-                // doesn't account for prog+useful or other combinations, but this is just as an example
-                if (node.item.progression) {
-                    nodeElement.style.color = "#AF99EF";
-                } else if (node.item.useful) {
-                    nodeElement.style.color = "#6D8BE8";
-                } else if (node.item.trap) {
-                    nodeElement.style.color = "#FA8072";
-                } else {
-                    nodeElement.style.color = "#00EEEE";
-                }
-            }
-
-            // no special coloring needed
-            case "text":
-            default:
-                break;
-        }
+        // could do code to change color depening on message in future
+        nodeElement.style.color = "#000000";
 
         messageElement.appendChild(nodeElement);
     }
 
     chat.appendChild(messageElement);
-    messageElement.scrollIntoView(false);
 }
-// end chat from phar
-
-const form = document.getElementById("connection_details")
 
 
 
 
 // Connect to the Archipelago server
+
 async function connect_to_server(event) {
     if (event !== null) {
         event.preventDefault()
@@ -112,28 +62,25 @@ async function connect_to_server(event) {
     var password = document.getElementById("Password").value ? document.getElementById("Password").value : null
     var conn_options = {
         password: password,
-        "slot_data" : true
+        "slot_data": true
     }
-    if ("Protocol" in data) {
-        var pro = data["Protocol"].split("://").pop().split("@")
-        url = pro[1]
-        slot = pro[0].split(":")[0]
-        conn_options["password"] = password ?? pro[0].split(":")[1]
-    }
-    console.log(url)
-    console.log(slot)
 
-
-    try{
-        var slot_data = await client.login(url, slot, "AP-Rummy", conn_options)
+    var slot_data
+    try {
+        slot_data = await client.login(url, slot, "AP-Rummy", conn_options)
         console.log("connected")
-        InitGame(slot_data)
     }
-    catch(error){
-            console.error("Failed to connect:", error);
+    catch (error) {
+        console.error("Failed to connect:", error);
+        showText(error.toString())
+        showText("Failed to connect, check that your hostname, port, name and password are correct and that your room is alive.")
+    }
+    if (slot_data) {
+        InitGame(slot_data)
     }
 
 }
+const form = document.getElementById("connection_details")
 form.addEventListener("submit", connect_to_server);
 
 
@@ -145,30 +92,41 @@ client.items.on("itemsReceived", async (items, index) => {
 
 // Disconnect from the server when unloading window.
 window.addEventListener("beforeunload", () => {
-     client.disconnect();
+    client.disconnect();
 })
 
 
-if (data["auto"] === "True") {
-    console.log("autoconnecting")
-    connect_to_server(null)
-}
 
-
-function send_message(e){
+function send_message(e) {
     var messageDIV = document.getElementById("Message")
-    if (client.ClientStatus != 0){
-    client.messages.say(messageDIV.value);
-    messageDIV.value = ""
+    if (messageDIV.value[0] == "/") {
+        const commands = ["help", "ready"]
+        switch (messageDIV.value) {
+            case "/help":
+                showText("The avalibe commands are: " + commands + ".");
+                break;
+            case "/ready":
+                client.updateStatus(clientStatuses.ready);
+                showText("You are ready")
+                break;
+            default:
+                showText("The command: " + messageDIV.value + ", is not defined, did you mean" + commands + ".")
+                break;
+        }
+
     } else {
-        messageDIV.value = "faild to send, not connected"
+        if (client.ClientStatus != 0) {
+            client.messages.say(messageDIV.value);
+            messageDIV.value = ""
+        } else {
 
+            showText("faild to send message, not connected?")
+        }
     }
-
-  e.preventDefault();
+    e.preventDefault();
 }
 var message_forum = document.getElementById("send_chat_forum");
 message_forum.addEventListener("submit", send_message);
 
 
-export {client}
+export { client, showText }

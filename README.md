@@ -4,8 +4,3 @@ The ap-world code can be found [here](https://github.com/Miiroun/Archipelago-New
 You can find the game [website](https://miiroun.github.io/ap-rummy/) here.
 
 Made by Miiroun
-
-Credit:
-- Archipelago.js client lib
-- qwint's ap-air delivery which was partially used as a base for the archipelago implementation
-- XXX for cards images
