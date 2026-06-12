@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "strict": false,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "rootDir": "src",
+        "outDir": "build",
+
+
+        // Required
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "esModuleInterop": true,
+        // Consult your bundler’s documentation
+        "customConditions": [
+            "module"
+        ],
+        // Recommended
+        "noEmit": true, // or `emitDeclarationOnly`
+        "allowImportingTsExtensions": true,
+        "allowArbitraryExtensions": true,
+        "verbatimModuleSyntax": true, // or `isolatedModules`
+        "isolatedModules": true
+    },
+    "include": [
+        "src"
+    ]
+}

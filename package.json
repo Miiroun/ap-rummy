@@ -18,6 +18,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "archipelago.js": "^2.1.0"
+    "archipelago.js": "^2.1.0",
+    "common-js": "^0.3.8"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
   }
 }
