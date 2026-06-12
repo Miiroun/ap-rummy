@@ -100,7 +100,9 @@ class init_merge extends dragElement {
   }
 
   dragMouseDown(e) {
-    if (e.shiftKey) {
+    if (e.ctrlKey) {
+      unMerge(this.elmnt, true)
+    } else if (e.shiftKey) {
       unMerge(this.elmnt)
     } else {
       super.dragMouseDown(e)

@@ -57,6 +57,8 @@ async function connect_to_server(event) {
     if (event !== null) {
         event.preventDefault()
     }
+    showText("Begins to connect ...")
+
     var url = document.getElementById("Hostname").value + ":" + document.getElementById("Port").value
     var slot = document.getElementById("Name").value
     var password = document.getElementById("Password").value ? document.getElementById("Password").value : null

@@ -1,14 +1,14 @@
-#brick, #preset_merge {
+#brick,
+#preset_merge {
   z-index: 9;
   background-color: #f1f1f1;
   border: 1px solid #d3d3d3;
   position: absolute;
-
 }
 
-#brick{
-  width : 64px;
-  height : 96px;
+#brick {
+  width: 64px;
+  height: 96px;
 }
 
 #preset_merge {
@@ -16,32 +16,42 @@
 }
 
 #brick_frame {
-  width : 64px;
-  height : 96px;
-  border : 2px solid #055292;
-  color : rgba(0, 0, 0, 0);
-  z-index:18;
+  width: 64px;
+  height: 96px;
+  border: 2px solid #055292;
+  color: rgba(0, 0, 0, 0);
+  z-index: 18;
   position: relative;
   top: -102px;
-  left : -2px;
+  left: -2px;
 
 }
 
 
 #chat {
   resize: both;
-   overflow:auto;
-   width : 400px;
-   height : 200px;
-   padding : 5px;
-   border : 1px solid #055292;
-   background-color: #93ffff;
-   color: #000000;
+  overflow: auto;
+  width: 400px;
+  height: 200px;
+  padding: 5px;
+  border: 1px solid #055292;
+  background-color: #93ffff;
+  color: #000000;
 
 }
 
 #board {
-  width : 1200px;
-  height : 580px;
+  width: 1200px;
+  height: 580px;
   background-color: #CEAA87;
+}
+
+#gui {
+  width: 200px;
+  height: 70px;
+  background-color: #888bdc;
+  position: relative;
+  top: 0px;
+  right: 0px;
+  z-index: 5;
 }
