@@ -132,7 +132,7 @@ async function OnitemsReceived(items, index) {
     for (let id = 0; id < items.length; id++) {
         switch (items[id].toString()) {
             case "progressive card":
-                cards_to_add += 5;
+                cards_to_add += 1;
                 break;
             case "progressive meld":
                 max_allowed_melds++;
@@ -157,21 +157,25 @@ async function OnitemsReceived(items, index) {
                 }
                 break;
             case "Shuffle":
+                audio_unconnect.play();
                 board.forEach(element => {
                     var brick_child = element.brick_copy.childNodes[1]
-                    brick_child.style.top = (Math.random() * 580) + "px";
-                    brick_child.style.left = (Math.random() * 1200) + "px";
+                    brick_child.style.top = ((Math.random() * 0.6 + 0.1) * window.innerHeight) + "px";
+                    brick_child.style.left = ((Math.random() * 0.8 + 0.1) * window.innerWidth) + "px";
                 });
                 merges.forEach(element => {
                     var merge_copy = element.merge_copy
-                    merge_copy.style.top = (Math.random() * 580) + "px";
-                    merge_copy.style.left = (Math.random() * 1200) + "px";
+                    merge_copy.style.top = ((Math.random() * 0.6 + 0.1) * window.innerHeight) + "px";
+                    merge_copy.style.left = ((Math.random() * 0.8 + 0.1) * window.innerWidth) + "px";
                 });
                 break;
-            case "Progress TRAP":
+            case "Unmerge":
+                audio_unconnect.play();
                 if (merges.length >= 1) {
                     var merg = merges[Math.floor(Math.random() * merges.length)];
-                    unMerge(merg.merge_copy)
+                    if (merg.sub_cards.length < 13) {
+                        unMerge(merg.merge_copy)
+                    }
                 }
                 break;
             default:
@@ -206,8 +210,8 @@ function createBord() {
         //console.log(brick_copy.childNodes)
         var brick_child = brick_copy.childNodes[1]
         if (brick_child.id != "brick") throw "bad child of preset brick";
-        brick_child.style.top = (Math.random() * 580) + "px";
-        brick_child.style.left = (Math.random() * 1200) + "px";
+        brick_child.style.top = ((Math.random() * 0.6 + 0.1) * window.innerHeight) + "px";
+        brick_child.style.left = ((Math.random() * 0.8 + 0.1) * window.innerWidth) + "px";
         new init_block(brick_child);
 
         const card = card_order[total_added_cards] // this shouldnt use id, need to only count the ids of cards, not other objects
@@ -242,7 +246,7 @@ function createBord() {
         boardDIV.appendChild(brick_copy)
         board.push(new Card(brick_copy, suit, value, false))
         total_added_cards++;
-        cards_to_add -= 1;
+        cards_to_add -= 1 / slot_data["CARD_PER_ITEM"];
     }
 }
 
@@ -395,7 +399,7 @@ function check_for_merge() {
 
 
     //console.log("Illiga merge tried")
-    showText("Illiga merge tried")
+    showText("Illegal merge tried")
     audio_bad.play();
 
     cards_to_merge.forEach(element => {
@@ -447,6 +451,8 @@ function unMerge(merge, set_select = false) {
 
     this_merge.merge_copy.remove();
     merges.splice(merges.indexOf(this_merge), 1)
+
+    send_check()
 
 }
 

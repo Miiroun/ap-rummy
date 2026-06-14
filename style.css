@@ -18,12 +18,12 @@
 #brick_frame {
   width: 64px;
   height: 96px;
-  border: 2px solid #055292;
+  border: 3px solid #00ced1;
   color: rgba(0, 0, 0, 0);
   z-index: 18;
   position: relative;
   top: -102px;
-  left: -2px;
+  left: -3px;
 
 }
 
@@ -41,8 +41,8 @@
 }
 
 #board {
-  width: 1200px;
-  height: 580px;
+  width: 1600px;
+  height: 700px;
   background-color: #CEAA87;
 }
 
